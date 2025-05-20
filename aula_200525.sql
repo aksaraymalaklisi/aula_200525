@@ -262,9 +262,8 @@ Crie as seguintes views com base no nosso DB:
 
 -- 1. ClientesComPedido - Já foi feita. É a ClientesCompradores.
 CREATE OR REPLACE VIEW ClientesComPedido AS -- Nome alterado para preencher os critérios
-SELECT Clientes.nome, Clientes.email, Pedidos.data_pedido as 'Data do Pedido', Pedidos.valor_total as 'Total do Pedido'
+SELECT Clientes.nome, Clientes.email
 FROM Clientes
-INNER JOIN Pedidos ON Pedidos.id_cliente = Clientes.id
 WHERE EXISTS (SELECT 1 FROM Pedidos WHERE Pedidos.id_cliente = Clientes.id);
 
 SELECT * FROM ClientesComPedido;
