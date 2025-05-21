@@ -278,3 +278,68 @@ FROM produtos
 WHERE estoque = 0;
 
 SELECT * FROM ProdutosSemEstoque;
+
+-- Mostrar views
+SHOW FULL TABLES 
+WHERE Table_type = 'VIEW';
+
+-- STORED PROCEDURES
+-- O que é uma stored procedure?
+
+/*
+Uma stored procedure é um bloco de combandos SQL
+que fica armazenado no banco de dados e pode ser executado
+quantas vezes for necessário com um simples comando chamado CALL.
+*/
+
+-- DELIMITER
+/*
+O DELIMITER é  um comando do MySQL (CLI ou no Workbench)
+que altera temporariamente o caractere ou símbolo que
+indica o fim de um comando SQL.
+
+Por padrão, o DELIMITER É ";".
+
+Contudo, problemas podem surgir pois, dentro de uma Stored Procedure,
+você pode ter múltiplos comandos SQL separados pelo DELIMITER,
+que causa confusão no interpretador SQL, acreditando que a Procedure terminou
+no primeiro DELIMITER (";").alter
+
+Há múltiplos DELIMITERs alternativos ao padrão, como "$$", "//", "%%".
+O mais comum dessas alternativas é o : "//"
+*/
+
+-- Definir DELIMITER para "//" (era ";")
+-- Obs.: Não coloque comentários ao lado do DELIMITER.
+DELIMITER //
+
+CREATE PROCEDURE ListarProdutosCaros()
+BEGIN
+	SELECT nome, preco 
+    FROM Produtos 
+    WHERE preco > 900;
+END //
+
+-- Retornar DELIMITER para o padrão (era "//", como visto no começo.)
+DELIMITER ;
+
+CALL ListarProdutosCaros();
+
+-- Listar pedidos de um cliente
+
+SELECT * FROM Pedidos; -- Checando Pedidos.
+
+DELIMITER //
+
+CREATE PROCEDURE ListarPedidoCliente(IN cliente_id INT) -- Estamos definindo que o parâmetro é chamado "cliente_id" e ele é um INT.
+BEGIN
+	SELECT p.id_cliente, p.data_pedido, p.valor_total
+    FROM Pedidos p
+    WHERE p.id_cliente = cliente_id; -- Note que WHERE está procurando justamente por esse parâmetro.
+END //
+
+DELIMITER ;
+
+DROP PROCEDURE ListarPedidoCliente;
+
+CALL ListarPedidoCliente(1);
