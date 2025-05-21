@@ -335,9 +335,10 @@ DELIMITER //
 
 CREATE PROCEDURE ListarPedidoCliente(IN cliente_id INT) -- Estamos definindo que o parâmetro é chamado "cliente_id" e ele é um INT.
 BEGIN
-	SELECT p.id_cliente, p.data_pedido, p.valor_total
+	SELECT p.id_cliente, c.nome, p.data_pedido, p.valor_total
     FROM Pedidos p
-    WHERE p.id_cliente = cliente_id; -- Note que WHERE está procurando justamente por esse parâmetro.
+    JOIN Clientes c ON p.id_cliente = c.id
+    WHERE c.id = cliente_id; -- Note que WHERE está procurando justamente por esse parâmetro.
 END //
 
 DELIMITER ;
