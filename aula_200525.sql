@@ -326,6 +326,8 @@ DELIMITER ;
 CALL ListarProdutosCaros();
 
 -- Listar pedidos de um cliente
+-- Esse exemplo utiliza parâmetros na PROCEDURE.
+-- São bem simples.
 
 SELECT * FROM Pedidos; -- Checando Pedidos.
 
@@ -342,4 +344,5 @@ DELIMITER ;
 
 DROP PROCEDURE ListarPedidoCliente;
 
+-- Aqui, o parâmetro é dado entre as parênteses da PROCEDURE
 CALL ListarPedidoCliente(1);
